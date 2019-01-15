@@ -1,6 +1,3 @@
-// import { elements } from './base';
-// import Serie from './models/Serie'
-
 class Serie {
     constructor(title, release_date, director, opening_crawl) {
         this.title = title;
@@ -12,10 +9,6 @@ class Serie {
 
 
 }
-
-
-
-
 class Series {
     constructor() {
         this.series = [];
@@ -26,20 +19,34 @@ class Series {
     fetchedData() {
         fetch('https://swapi.co/api/films')
             .then(response => response.json())
-
-        // .then(users => console.log('users', users.results))
-        .then(users => users.results.map(ser => {
-            console.log('users.results', users.results)
-            let serie = new Serie(ser.title,
-                ser.release_date,
-                ser.director,
-                ser.opening_crawl);
-            series.addSerie(serie);
-            console.log('series', series)
-        }))
+            .then(users => {
+                users.results.map(ser => {
+                    let serie = new Serie(ser.title,
+                        ser.release_date,
+                        ser.director,
+                        ser.opening_crawl);
+                    this.addSerie(serie);
+                });
+                this.render();
+            });
     }
-    render() {
-
+    render(series) {
+        let card = "";
+        this.series.map(serie => {
+            card += `<div class="col-lg-4 mb-4">
+            <div class="card">          
+                <div class="card-body">
+                    <h5 class="card-title">${serie.title}</h5>
+                    <p class="card-text">${serie.director}</p>
+                    <p class="card-text">${serie.release_date}</p>
+                    <p class="card-text">${serie.opening_crawl}</p>
+                    <a href="https://en.wikipedia.org/wiki/The_Good_Doctor_(TV_series)" class="btn btn-outline-success btn-sm">See more </a>
+                    <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>`;
+        })
+        document.getElementById("cardsSeries").innerHTML = card;
     }
 }
 const series = new Series();
