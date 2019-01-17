@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-
+import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 
-
+import Header from "./components/Header/Header";
 import CardList from "./components/CardList/CardList";
 //import Scroll from '../components/Scroll';
 import "./App.css";
@@ -19,7 +19,7 @@ class App extends Component {
     fetch("https://swapi.co/api/films")
       .then(response => response.json())
       .then(films => {
-        console.log('films', films)
+        console.log("films", films);
         this.setState({ movies: films.results });
       });
   }
@@ -29,9 +29,8 @@ class App extends Component {
     return !movies.length ? (
       <h1>Loading</h1>
     ) : (
-      <div className="tc">
-        <h1 className="f1 green">RoboFriends</h1>
-
+      <div>
+        <Header />
         <CardList movies={movies} />
       </div>
     );
